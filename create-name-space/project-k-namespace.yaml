@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: project-k
+  name: project-k
+spec:
+  finalizers:
+  - kubernetes

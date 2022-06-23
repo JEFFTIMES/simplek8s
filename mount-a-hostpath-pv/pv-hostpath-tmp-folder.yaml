@@ -1,0 +1,35 @@
+#
+# Define a PersistentVolume with a hostPath type by specifying the hostPath property in the .spec property
+# specific a storageClassName for the PersistentVolumeClaim to filter this PV.
+#
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath-tmp-folder
+  labels:
+    type: hostPath
+    location: host-tmp
+spec:
+  storageClassName: host-path-storage-class
+  capacity:
+    storage: 256Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /tmp
+  persistentVolumeReclaimPolicy: Retain
+---
+#
+# Define a PersistentVolumeClaim to correspond the precedent defined PV 
+#
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath-tmp-folder
+spec:
+  storageClassName: host-path-storage-class
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 32Mi

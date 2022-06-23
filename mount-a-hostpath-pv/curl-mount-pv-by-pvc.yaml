@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl-mount-pv-by-pvc
+spec:
+  selector:
+    matchLabels:
+      app: curlpod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: curlpod
+    spec:
+      volumes:
+      - name: host-tmp-folder
+        persistentVolumeClaim: 
+          claimName: pvc-hostpath-tmp-folder
+      containers:
+      - name: curl-with-pv-and-secret
+        command:
+        - sh
+        - -c
+        - while true; do sleep 1; done
+        image: radial/busyboxplus:curl
+        volumeMounts:
+        - mountPath: /tmp/thisVol
+          subPath: this_folder
+          name: host-tmp-folder
+        - mountPath: /tmp/thatVol
+          subPath: that_folder
+          name: host-tmp-folder
