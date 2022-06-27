@@ -1,0 +1,65 @@
+# 
+# the Service object
+#
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: project-k
+  name: secured-nginx
+  labels:
+    app: svc-nginx-https
+    namespace: project-k
+    env: dev
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8088
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 8443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:   # targeting the labels of the pods to be selected
+    app: nginx-https
+    namespace: project-k
+    env: dev
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: project-k
+  name: deployment-nginx-https
+spec:
+  selector:
+    matchLabels:
+      app: nginx-https
+  replicas: 1
+  template:
+    metadata:
+      labels:     # the lables for the Service object to target to the pods
+        app: nginx-https      
+        namespace: project-k
+        env: dev
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: secret-tls-nginx-https
+      - name: configmap-volume
+        configMap:
+          name: configmap-nginx-https-default-conf 
+      containers:
+      - name: container-nginx-https
+        image: bprashanth/nginxhttps:1.0
+        ports:
+        - containerPort: 443
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: secret-volume
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
