@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: project-k
+  name: curl-work-in-pod
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: project-k
+  name: curl-work-in-pod
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: project-k
+roleRef:
+  kind: Role
+  name: curl-work-in-pod
+  apiGroup: ""

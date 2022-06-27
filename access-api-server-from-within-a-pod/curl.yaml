@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: project-k
+  name: curl
+spec:
+  selector:
+    matchLabels:
+      app: curlpod
+      namespace: project-k
+      env: dev
+  replicas: 1
+  template:
+    metadata:
+      namespace: project-k
+      labels:
+        app: curlpod
+        namespace: project-k
+        env: dev
+    
+    spec:
+      # uncomment the following volume section to mount TLS cert into the curlpod
+      volumes:
+        - name: tls-crt-volume
+          secret: 
+            secretName: secret-tls-nginx-https
+      containers:
+      - name: curl
+        command:
+        - sh
+        - -c
+        - while true; do sleep 1; done
+        image: radial/busyboxplus:curl
+        # uncomment the volumeMounts section to mount TLS cert
+        volumeMounts:
+          - mountPath: /etc/self-signed-ca
+            name: tls-crt-volume
