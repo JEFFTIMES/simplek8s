@@ -642,7 +642,7 @@ this is a note
 ## Part II: Basic Tasks
 
 - Creating a Namespace
-- Creating a `Deployment` for a Stateless Application
+- [Creating a `Deployment` for a Stateless Application](./create-a-deployment-to-deploy-nginx/)
 - Mounting a Persistent Volume with a `hostPath` Type
 - Creating a `ClusterRoleBinding` to enable the Kubernetes-Dashboard
 - Creating a `Role` for the default `ServiceAccount`  accessing API Server from within a `Pod`
