@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curlpod
+      env: dev
+      namespace: default
+  template:
+    metadata:
+      labels:
+        app: curlpod
+        env: dev
+        namespace: default
+      namespace: default
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - while true; do sleep 1; done
+        image: radial/busyboxplus:curl
+        imagePullPolicy: IfNotPresent
+        name: curl
+        volumeMounts:
+        - mountPath: /etc/self-signed-ca
+          name: tls-crt-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: tls-crt-volume
+        secret:
+          defaultMode: 420
+          secretName: secret-tls-nginx-https

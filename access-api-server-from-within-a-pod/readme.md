@@ -2,7 +2,7 @@
 # Purpose
 Creating a Role and RoleBinding for the default ServiceAccount of the Namespace project-k, through which to allow the default ServiceAccount accessing the API Server from within a curlpod.
 
-# Crafting a `Role` and `RoleBinding` manifest
+# Crafting a `Role` and a `RoleBinding` manifest
 
 - Authorizing operational permissions on the resources to the `Role`. 
 - In this case, all actions on any resources under any apiGroups are granted to the default `ServiceAccount`.
