@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: project-k
+  name: role-dev-in-ns-project-k
+rules:
+- apiGroups: ["", "apps", "batch", "storage.k8s.io"] # "" indicates the core API group
+  resources: ["pods", "services", "deployments", "job", "configmaps", "secrets", "volumes"]
+  verbs:     ["get", "watch", "list", "create", "update", "delete", "rollback"]
+

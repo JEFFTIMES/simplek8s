@@ -5,5 +5,7 @@ metadata:
     kubernetes.io/metadata.name: project-k
   name: project-k
 spec:
-  finalizers:  # here the dead 'kubernetes' finalizers used for preventing the Namespace being deleted accidentally.
+  # here the dead 'kubernetes' finalizers used for preventing the Namespace being deleted accidentally.
+  # any time the namespace is deleted, kubernetes does not delete it until the finalizer is removed from the manifest.  
+  finalizers:  
   - kubernetes

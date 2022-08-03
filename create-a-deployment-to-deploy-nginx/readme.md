@@ -168,7 +168,7 @@ Applying the secret manifest
 > with the entry set in the `/etc/hosts` file on the single node the cluster running, the internal dns server resolves a wrong record for the `secured-nginx` within the cluster.
 
 
-### Mounting the TLS `Secret` created into a pod 
+### Mounting the created TLS `Secret` into a pod 
 
     $ kubectl apply -f deployment-curl-with-crt.yaml
 
